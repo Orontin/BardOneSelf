@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Quick)
+find_package(Qt6 REQUIRED COMPONENTS Core Quick QuickControls2)
 
 qt_standard_project_setup()
 
@@ -17,4 +17,4 @@ qt6_add_executable(bardoneself
     ${APP_RESOURCES}
 )
 
-target_link_libraries(bardoneself PRIVATE Qt::Core Qt::Quick)
+target_link_libraries(bardoneself PRIVATE Qt::Core Qt::Quick Qt::QuickControls2)
