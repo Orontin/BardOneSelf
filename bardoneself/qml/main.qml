@@ -216,37 +216,83 @@ Window {
 
             color: "white"
 
-            RangeSlider {
+            Rectangle {
                 id: _offset
+
+                property int from: 0
+                property int to: 356400000
+
+                property int firstValue: (_offsetFirst.x * _offset.to) / _offset.width;
+                property int secondValue: (_offsetSecond.x * _offset.to) / _offset.width;
 
                 anchors.fill: offset
 
-                anchors.leftMargin: _offset.height
-                anchors.rightMargin: _offset.height
+                color: "green"
 
-                from: 0
-                to: 100
-                first.value: 0
-                second.value: 100
+                Rectangle {
+                    id: _offsetFirst
 
-                background: Rectangle {
-                    implicitWidth: _offset.width
-                    implicitHeight: _offset.height
-                    color: "green"
-                }
-
-                first.handle: Rectangle {
-                    x: _offset.first.visualPosition * _offset.width
                     width: _offset.height
                     height: _offset.height
+
                     color: "blue"
+
+                    MouseArea {
+                        id: _offsetFirstMouse
+
+                        anchors.fill: _offsetFirst
+
+                        drag.target: _offsetFirst
+                        drag.axis: Drag.XAxis
+                        drag.minimumX: 0
+                        drag.maximumX: _offsetSecond.x
+                    }
                 }
 
-                second.handle: Rectangle {
-                    x: _offset.second.visualPosition * _offset.width
+                Rectangle {
+                    id: _offsetLeftFill
+                    anchors.left: _offset.left
+                    anchors.right: _offsetFirst.left
+                    anchors.top: _offset.top
+                    anchors.bottom: _offset.bottom
+                    color: "#4066cc"
+                }
+
+                Rectangle {
+                    id: _offsetSecond
+
                     width: _offset.height
                     height: _offset.height
+
                     color: "red"
+
+                    MouseArea {
+                        id: _offsetSecondMouse
+
+                        anchors.fill: _offsetSecond
+
+                        drag.target: _offsetSecond
+                        drag.axis: Drag.XAxis
+                        drag.minimumX: _offsetFirst.x
+                        drag.maximumX: _offset.width
+                    }
+                }
+
+                Rectangle {
+                    id: _offsetRightFill
+                    anchors.left: _offsetSecond.right
+                    anchors.right: _offset.right
+                    anchors.top: _offset.top
+                    anchors.bottom: _offset.bottom
+                    color: "#B03F35"
+                }
+
+                onFirstValueChanged: {
+                    console.log("firstValue changed:", _offset.firstValue)
+                }
+
+                onSecondValueChanged: {
+                    console.log("secondValue changed:", _offset.secondValue)
                 }
             }
         }
