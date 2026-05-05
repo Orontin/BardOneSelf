@@ -199,9 +199,127 @@ Window {
                 anchors.topMargin: audio.width * (1 / 223)
                 anchors.leftMargin: audio.width * (1 / 223)
 
-                visible: audio.status
+                color: "white"
 
-                color: "black"
+                Rectangle {
+                    id: trimmingLine
+
+                    width: audio.width * (90 / 223)
+                    height: audio.width * (5 / 223)
+
+                    anchors.top: trimming.top
+                    anchors.left: trimming.left
+
+                    anchors.topMargin: audio.width * (6 / 223)
+                    anchors.leftMargin: audio.width * (3 / 223)
+
+                    color: "black"
+
+                    Rectangle {
+                        id: trimmingLineBackground
+
+                        width: audio.width * (88 / 223)
+                        height: audio.width * (3 / 223)
+
+                        anchors.top: trimmingLine.top
+                        anchors.left: trimmingLine.left
+
+                        anchors.topMargin: audio.width * (1 / 223)
+                        anchors.leftMargin: audio.width * (1 / 223)
+
+                        color: "grey"
+                    }
+
+                    Rectangle {
+                        id: trimmingLineLeft
+
+                        width: audio.width * (20 / 223)
+                        height: audio.width * (3 / 223)
+
+                        anchors.top: trimmingLine.top
+                        anchors.left: trimmingLine.left
+
+                        anchors.topMargin: audio.width * (1 / 223)
+                        anchors.leftMargin: audio.width * (1 / 223)
+
+                        color: "red"
+                    }
+
+                    Rectangle {
+                        id: trimmingLineRight
+
+                        width: audio.width * (20 / 223)
+                        height: audio.width * (3 / 223)
+
+                        anchors.top: trimmingLine.top
+                        anchors.right: trimmingLine.right
+
+                        anchors.topMargin: audio.width * (1 / 223)
+                        anchors.rightMargin: audio.width * (1 / 223)
+
+                        color: "blue"
+                    }
+
+                    Rectangle {
+                        id: trimmingLineTopWhite
+
+                        width: audio.width * (84 / 223)
+                        height: audio.width * (2 / 223)
+
+                        anchors.top: trimmingLine.top
+                        anchors.left: trimmingLine.left
+
+                        anchors.topMargin: audio.width * (0 / 223)
+                        anchors.leftMargin: audio.width * (3 / 223)
+
+                        color: "white"
+
+                        Rectangle {
+                            id: trimmingLineTopBlack
+
+                            width: audio.width * (86 / 223)
+                            height: audio.width * (1 / 223)
+
+                            anchors.bottom: trimmingLineTopWhite.bottom
+                            anchors.left: trimmingLineTopWhite.left
+
+                            anchors.bottomMargin: audio.width * (0 / 223)
+                            anchors.leftMargin: audio.width * (-1 / 223)
+
+                            color: "black"
+                        }
+                    }
+
+                    Rectangle {
+                        id: trimmingLineBottomWhite
+
+                        width: audio.width * (84 / 223)
+                        height: audio.width * (2 / 223)
+
+                        anchors.bottom: trimmingLine.bottom
+                        anchors.left: trimmingLine.left
+
+                        anchors.bottomMargin: audio.width * (0 / 223)
+                        anchors.leftMargin: audio.width * (3 / 223)
+
+                        color: "white"
+
+                        Rectangle {
+                            id: trimmingLineBottomBlack
+
+                            width: audio.width * (86 / 223)
+                            height: audio.width * (1 / 223)
+
+                            anchors.top: trimmingLineBottomWhite.top
+                            anchors.left: trimmingLineBottomWhite.left
+
+                            anchors.topMargin: audio.width * (0 / 223)
+                            anchors.leftMargin: audio.width * (-1 / 223)
+
+                            color: "black"
+                        }
+                    }
+                }
             }
 
             Rectangle {
@@ -215,8 +333,6 @@ Window {
 
                 anchors.topMargin: audio.width * (19 / 223)
                 anchors.leftMargin: audio.width * (1 / 223)
-
-                visible: audio.status
 
                 color: "black"
             }
@@ -232,8 +348,6 @@ Window {
 
                 anchors.topMargin: audio.width * (37 / 223)
                 anchors.leftMargin: audio.width * (1 / 223)
-
-                visible: audio.status
 
                 color: "black"
             }
