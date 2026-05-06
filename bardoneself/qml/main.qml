@@ -9,8 +9,8 @@ import Qt.labs.platform
 Window {
     id: root
 
-    width: 1960
-    height: 1080
+    width: 800
+    height: 600
 
     visible: true
 
@@ -199,7 +199,7 @@ Window {
                 anchors.topMargin: audio.width * (1 / 223)
                 anchors.leftMargin: audio.width * (1 / 223)
 
-                color: "white"
+                color: "transparent"
 
                 Rectangle {
                     id: trimmingLine
@@ -233,7 +233,7 @@ Window {
                     Rectangle {
                         id: trimmingLineLeft
 
-                        width: audio.width * (20 / 223)
+                        width: indicatorLeft.x
                         height: audio.width * (3 / 223)
 
                         anchors.top: trimmingLine.top
@@ -248,7 +248,7 @@ Window {
                     Rectangle {
                         id: trimmingLineRight
 
-                        width: audio.width * (20 / 223)
+                        width: trimmingLineBackground.width - (audio.width * (1 / 223)) - indicatorRight.x
                         height: audio.width * (3 / 223)
 
                         anchors.top: trimmingLine.top
@@ -269,7 +269,6 @@ Window {
                         anchors.top: trimmingLine.top
                         anchors.left: trimmingLine.left
 
-                        anchors.topMargin: audio.width * (0 / 223)
                         anchors.leftMargin: audio.width * (3 / 223)
 
                         color: "white"
@@ -283,7 +282,6 @@ Window {
                             anchors.bottom: trimmingLineTopWhite.bottom
                             anchors.left: trimmingLineTopWhite.left
 
-                            anchors.bottomMargin: audio.width * (0 / 223)
                             anchors.leftMargin: audio.width * (-1 / 223)
 
                             color: "black"
@@ -299,7 +297,6 @@ Window {
                         anchors.bottom: trimmingLine.bottom
                         anchors.left: trimmingLine.left
 
-                        anchors.bottomMargin: audio.width * (0 / 223)
                         anchors.leftMargin: audio.width * (3 / 223)
 
                         color: "white"
@@ -313,10 +310,331 @@ Window {
                             anchors.top: trimmingLineBottomWhite.top
                             anchors.left: trimmingLineBottomWhite.left
 
-                            anchors.topMargin: audio.width * (0 / 223)
                             anchors.leftMargin: audio.width * (-1 / 223)
 
                             color: "black"
+                        }
+                    }
+                }
+
+                Rectangle {
+                    id: indicatorLeft
+
+                    anchors.top: trimming.top
+
+                    width: audio.width * (9 / 223)
+                    height: audio.width * (11 / 223)
+
+                    color: "transparent"
+
+                    Rectangle {
+                        id: indicatorLeftHead
+
+                        width: audio.width * (9 / 223)
+                        height: audio.width * (5 / 223)
+
+                        anchors.top: indicatorLeft.top
+                        anchors.left: indicatorLeft.left
+
+                        color: "black"
+
+                        Rectangle {
+                            id: indicatorLeftHeadIn
+
+                            width: audio.width * (7 / 223)
+                            height: audio.width * (3 / 223)
+
+                            anchors.top: indicatorLeftHead.top
+                            anchors.left: indicatorLeftHead.left
+
+                            anchors.topMargin: audio.width * (1 / 223)
+                            anchors.leftMargin: audio.width * (1 / 223)
+
+                            color: "red"
+                        }
+                    }
+
+                    Rectangle {
+                        id: indicatorLeftLeg
+
+                        width: audio.width * (3 / 223)
+                        height: audio.width * (7 / 223)
+
+                        anchors.top: indicatorLeft.top
+                        anchors.left: indicatorLeft.left
+
+                        anchors.topMargin: audio.width * (4 / 223)
+                        anchors.leftMargin: audio.width * (3 / 223)
+
+                        color: "black"
+
+                        Rectangle {
+                            id: indicatorLeftLegIn
+
+                            width: audio.width * (1 / 223)
+                            height: audio.width * (6 / 223)
+
+                            anchors.top: indicatorLeftLeg.top
+                            anchors.left: indicatorLeftLeg.left
+
+                            anchors.leftMargin: audio.width * (1 / 223)
+
+                            color: "red"
+                        }
+                    }
+
+                    MouseArea {
+                        id: indicatorLeftMouseArea
+                        anchors.fill: indicatorLeft
+                        drag.target: indicatorLeft
+                        drag.axis: Drag.XAxis
+                        cursorShape: Qt.SizeHorCursor
+                        drag.minimumX: 0
+                        drag.maximumX: (trimmingLineBackground.width - audio.width * (1 / 223)) -  trimmingLineRight.width
+                    }
+
+                    onXChanged: {
+                        if ((trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))) <= 0.5) {
+                            indicatorLeftTimeLeft.anchors.top = indicatorLeft.top
+                            indicatorLeftTimeLeft.anchors.bottom = indicatorLeft.bottom
+                            indicatorLeftTimeLeft.anchors.right = trimming.right
+                            indicatorLeftTimeLeft.anchors.left = indicatorLeft.right
+                            indicatorLeftTimeLeft.anchors.rightMargin = 0
+                            indicatorLeftTimeLeft.anchors.leftMargin = audio.width * (1 / 223)
+                            indicatorLeftTimeLeftText.horizontalAlignment = Text.AlignLeft
+                        } else {
+                            indicatorLeftTimeLeft.anchors.top = indicatorLeft.top
+                            indicatorLeftTimeLeft.anchors.bottom = indicatorLeft.bottom
+                            indicatorLeftTimeLeft.anchors.right = indicatorLeft.left
+                            indicatorLeftTimeLeft.anchors.left = trimming.left
+                            indicatorLeftTimeLeft.anchors.rightMargin = audio.width * (1 / 223)
+                            indicatorLeftTimeLeft.anchors.leftMargin = 0
+                            indicatorLeftTimeLeftText.horizontalAlignment = Text.AlignRight
+                        }
+                    }
+                }
+
+                Rectangle {
+                    id: indicatorRight
+
+                    anchors.bottom: trimming.bottom
+
+                    width: audio.width * (9 / 223)
+                    height: audio.width * (11 / 223)
+
+                    color: "transparent"
+
+                    Rectangle {
+                        id: indicatorRightHead
+
+                        width: audio.width * (9 / 223)
+                        height: audio.width * (5 / 223)
+
+                        anchors.bottom: indicatorRight.bottom
+                        anchors.left: indicatorRight.left
+
+                        color: "black"
+
+                        Rectangle {
+                            id: indicatorRightHeadIn
+
+                            width: audio.width * (7 / 223)
+                            height: audio.width * (3 / 223)
+
+                            anchors.bottom: indicatorRightHead.bottom
+                            anchors.left: indicatorRightHead.left
+
+                            anchors.bottomMargin: audio.width * (1 / 223)
+                            anchors.leftMargin: audio.width * (1 / 223)
+
+                            color: "blue"
+                        }
+                    }
+
+                    Rectangle {
+                        id: indicatorRightLeg
+
+                        width: audio.width * (3 / 223)
+                        height: audio.width * (7 / 223)
+
+                        anchors.bottom: indicatorRight.bottom
+                        anchors.left: indicatorRight.left
+
+                        anchors.bottomMargin: audio.width * (4 / 223)
+                        anchors.leftMargin: audio.width * (3 / 223)
+
+                        color: "black"
+
+                        Rectangle {
+                            id: indicatorRightLegIn
+
+                            width: audio.width * (1 / 223)
+                            height: audio.width * (6 / 223)
+
+                            anchors.bottom: indicatorRightLeg.bottom
+                            anchors.left: indicatorRightLeg.left
+
+                            anchors.leftMargin: audio.width * (1 / 223)
+
+                            color: "blue"
+                        }
+                    }
+
+                    MouseArea {
+                        id: indicatorRightMouseArea
+                        anchors.fill: indicatorRight
+                        drag.target: indicatorRight
+                        drag.axis: Drag.XAxis
+                        cursorShape: Qt.SizeHorCursor
+                        drag.minimumX: trimmingLineLeft.width
+                        drag.maximumX: (trimmingLineBackground.width - audio.width * (1 / 223))
+                    }
+
+                    onXChanged: {
+                        if ((trimmingLineRight.width /(trimmingLineBackground.width - audio.width * (1 / 223))) >= 0.5) {
+                            indicatorRightTimeRight.anchors.top = indicatorRight.top
+                            indicatorRightTimeRight.anchors.bottom = indicatorRight.bottom
+                            indicatorRightTimeRight.anchors.right = trimming.right
+                            indicatorRightTimeRight.anchors.left = indicatorRight.right
+                            indicatorRightTimeRight.anchors.rightMargin = 0
+                            indicatorRightTimeRight.anchors.leftMargin = audio.width * (1 / 223)
+                            indicatorRightTimeRightText.horizontalAlignment = Text.AlignLeft
+                        } else {
+                            indicatorRightTimeRight.anchors.top = indicatorRight.top
+                            indicatorRightTimeRight.anchors.bottom = indicatorRight.bottom
+                            indicatorRightTimeRight.anchors.right = indicatorRight.left
+                            indicatorRightTimeRight.anchors.left = trimming.left
+                            indicatorRightTimeRight.anchors.rightMargin = audio.width * (1 / 223)
+                            indicatorRightTimeRight.anchors.leftMargin = 0
+                            indicatorRightTimeRightText.horizontalAlignment = Text.AlignRight
+                        }
+                    }
+                }
+
+                Rectangle {
+                    id: indicatorLeftTimeLeft
+
+                    anchors.bottomMargin: audio.width * (7 / 223)
+
+                    color: "transparent"
+
+                    Text {
+                        id: indicatorLeftTimeLeftText
+
+                        anchors.fill: indicatorLeftTimeLeft
+
+                        verticalAlignment: Text.AlignVCenter
+
+                        color: "black"
+
+                        wrapMode: Text.NoWrap
+
+                        font.family: "Courier New"
+                        font.bold: true
+
+                        text: "0:00:00:000:000000"
+
+                        onWidthChanged: {
+                            adjustFontSize()
+                        }
+
+                        onHeightChanged: {
+                            adjustFontSize()
+                        }
+
+                        function adjustFontSize() {
+                            var maxWidth = width - (anchors.margins * 2)
+                            var maxHeight = height - (anchors.margins * 2)
+
+                            if (maxWidth <= 0 || maxHeight <= 0) {
+                                return
+                            }
+
+                            var low = 1
+                            var high = maxHeight
+                            var best = low
+
+                            while (low <= high) {
+                                var mid = Math.floor((low + high) / 2)
+                                font.pixelSize = mid
+
+                                if (contentWidth <= maxWidth && contentHeight <= maxHeight) {
+                                    best = mid
+                                    low = mid + 1
+                                } else {
+                                    high = mid - 1
+                                }
+                            }
+
+                            font.pixelSize = best
+                        }
+
+                        Component.onCompleted: {
+                            adjustFontSize()
+                        }
+                    }
+                }
+
+                Rectangle {
+                    id: indicatorRightTimeRight
+
+                    anchors.topMargin: audio.width * (7 / 223)
+
+                    color: "transparent"
+
+                    Text {
+                        id: indicatorRightTimeRightText
+
+                        anchors.fill: indicatorRightTimeRight
+
+                        verticalAlignment: Text.AlignVCenter
+
+                        color: "black"
+
+                        wrapMode: Text.NoWrap
+
+                        font.family: "Courier New"
+                        font.bold: true
+
+                        text: "0:00:00:000:000000"
+
+                        onWidthChanged: {
+                            adjustFontSize()
+                        }
+
+                        onHeightChanged: {
+                            adjustFontSize()
+                        }
+
+                        function adjustFontSize() {
+                            var maxWidth = width - (anchors.margins * 2)
+                            var maxHeight = height - (anchors.margins * 2)
+
+                            if (maxWidth <= 0 || maxHeight <= 0) {
+                                return
+                            }
+
+                            var low = 1
+                            var high = maxHeight
+                            var best = low
+
+                            while (low <= high) {
+                                var mid = Math.floor((low + high) / 2)
+                                font.pixelSize = mid
+
+                                if (contentWidth <= maxWidth && contentHeight <= maxHeight) {
+                                    best = mid
+                                    low = mid + 1
+                                } else {
+                                    high = mid - 1
+                                }
+                            }
+
+                            font.pixelSize = best
+                        }
+
+                        Component.onCompleted: {
+                            adjustFontSize()
                         }
                     }
                 }
