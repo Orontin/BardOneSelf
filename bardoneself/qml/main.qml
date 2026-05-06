@@ -320,6 +320,8 @@ Window {
                 Rectangle {
                     id: indicatorLeft
 
+                    x: 0
+
                     anchors.top: trimming.top
 
                     width: audio.width * (9 / 223)
@@ -394,6 +396,26 @@ Window {
                     }
 
                     onXChanged: {
+                        adjustSize()
+                    }
+
+                    onYChanged: {
+                        adjustSize()
+                    }
+
+                    onWidthChanged: {
+                        adjustSize()
+                    }
+
+                    onHeightChanged: {
+                        adjustSize()
+                    }
+
+                    Component.onCompleted: {
+                        adjustSize()
+                    }
+
+                    function adjustSize() {
                         if ((trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))) <= 0.5) {
                             indicatorLeftTimeLeft.anchors.top = indicatorLeft.top
                             indicatorLeftTimeLeft.anchors.bottom = indicatorLeft.bottom
@@ -416,6 +438,8 @@ Window {
 
                 Rectangle {
                     id: indicatorRight
+
+                    x: (trimmingLineBackground.width - audio.width * (1 / 223))
 
                     anchors.bottom: trimming.bottom
 
@@ -491,6 +515,26 @@ Window {
                     }
 
                     onXChanged: {
+                        adjustSize()
+                    }
+
+                    onYChanged: {
+                        adjustSize()
+                    }
+
+                    onWidthChanged: {
+                        adjustSize()
+                    }
+
+                    onHeightChanged: {
+                        adjustSize()
+                    }
+
+                    Component.onCompleted: {
+                        adjustSize()
+                    }
+
+                    function adjustSize() {
                         if ((trimmingLineRight.width /(trimmingLineBackground.width - audio.width * (1 / 223))) >= 0.5) {
                             indicatorRightTimeRight.anchors.top = indicatorRight.top
                             indicatorRightTimeRight.anchors.bottom = indicatorRight.bottom
