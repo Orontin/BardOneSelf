@@ -333,6 +333,19 @@ Window {
 
                     color: "transparent"
 
+                    focus: true
+
+                    Keys.onLeftPressed: {
+                        var microseconds = indicatorLeftTimeLeftText.parseMicroseconds(indicatorLeftTimeLeftText.text)
+                        microseconds = microseconds - 1
+                        console.logmicroseconds
+                    }
+                    Keys.onRightPressed: {
+                        var microseconds = indicatorLeftTimeLeftText.parseMicroseconds(indicatorLeftTimeLeftText.text)
+                        microseconds = microseconds + 1
+                        console.log(microseconds)
+                    }
+
                     Rectangle {
                         id: indicatorLeftHead
 
@@ -459,6 +472,19 @@ Window {
                     height: audio.width * (11 / 223)
 
                     color: "transparent"
+
+                    focus: true
+
+                    Keys.onLeftPressed: {
+                        var microseconds = indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text)
+                        microseconds = microseconds + 1
+                        console.log(microseconds)
+                    }
+                    Keys.onRightPressed: {
+                        var microseconds = indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text)
+                        microseconds = microseconds - 1
+                        console.log(microseconds)
+                    }
 
                     Rectangle {
                         id: indicatorRightHead
@@ -659,6 +685,19 @@ Window {
                             return hours + ":" + pad2(minutes) + ":" + pad2(seconds) + ":" + pad3(millis) + ":" + pad3(microsPart);
                         }
 
+                        function parseMicroseconds(str) {
+                            const parts = str.split(':');
+
+                            const hours = parseInt(parts[0], 10);
+                            const minutes = parseInt(parts[1], 10);
+                            const seconds = parseInt(parts[2], 10);
+                            const millis = parseInt(parts[3], 10);
+                            const micros = parseInt(parts[4], 10);
+
+                            const totalMicros = (hours * 3600 + minutes * 60 + seconds) * 1000000 + millis * 1000 + micros;
+                            return totalMicros;
+                        }
+
                         Component.onCompleted: {
                             adjustFontSize()
                         }
@@ -749,6 +788,19 @@ Window {
                             }
 
                             return hours + ":" + pad2(minutes) + ":" + pad2(seconds) + ":" + pad3(millis) + ":" + pad3(microsPart);
+                        }
+
+                        function parseMicroseconds(str) {
+                            const parts = str.split(':');
+
+                            const hours = parseInt(parts[0], 10);
+                            const minutes = parseInt(parts[1], 10);
+                            const seconds = parseInt(parts[2], 10);
+                            const millis = parseInt(parts[3], 10);
+                            const micros = parseInt(parts[4], 10);
+
+                            const totalMicros = (hours * 3600 + minutes * 60 + seconds) * 1000000 + millis * 1000 + micros;
+                            return totalMicros;
                         }
 
                         Component.onCompleted: {
