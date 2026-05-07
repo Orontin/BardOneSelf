@@ -320,7 +320,9 @@ Window {
                 Rectangle {
                     id: indicatorLeft
 
-                    x: 0
+                    property real position: 0
+
+                    x: indicatorLeft.position * (trimmingLineBackground.width - audio.width * (1 / 223))
 
                     anchors.top: trimming.top
 
@@ -392,7 +394,13 @@ Window {
                         drag.axis: Drag.XAxis
                         cursorShape: Qt.SizeHorCursor
                         drag.minimumX: 0
-                        drag.maximumX: (trimmingLineBackground.width - audio.width * (1 / 223)) -  trimmingLineRight.width
+                        drag.maximumX: (trimmingLineBackground.width - audio.width * (1 / 223)) - trimmingLineRight.width
+
+                        onPressedChanged: {
+                            if (!indicatorLeftMouseArea.pressed) {
+                                indicatorLeft.position = trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))
+                            }
+                        }
                     }
 
                     onXChanged: {
@@ -439,7 +447,9 @@ Window {
                 Rectangle {
                     id: indicatorRight
 
-                    x: (trimmingLineBackground.width - audio.width * (1 / 223))
+                    property real position: 0
+
+                    x: (1 - indicatorRight.position) * (trimmingLineBackground.width - audio.width * (1 / 223))
 
                     anchors.bottom: trimming.bottom
 
@@ -511,7 +521,13 @@ Window {
                         drag.axis: Drag.XAxis
                         cursorShape: Qt.SizeHorCursor
                         drag.minimumX: trimmingLineLeft.width
-                        drag.maximumX: (trimmingLineBackground.width - audio.width * (1 / 223))
+                        drag.maximumX: trimmingLineBackground.width - audio.width * (1 / 223)
+
+                        onPressedChanged: {
+                            if (!indicatorRightMouseArea.pressed) {
+                                indicatorRight.position = trimmingLineRight.width / (trimmingLineBackground.width - audio.width * (1 / 223))
+                            }
+                        }
                     }
 
                     onXChanged: {
@@ -535,7 +551,7 @@ Window {
                     }
 
                     function adjustSize() {
-                        if ((trimmingLineRight.width /(trimmingLineBackground.width - audio.width * (1 / 223))) >= 0.5) {
+                        if ((trimmingLineRight.width / (trimmingLineBackground.width - audio.width * (1 / 223))) >= 0.5) {
                             indicatorRightTimeRight.anchors.top = indicatorRight.top
                             indicatorRightTimeRight.anchors.bottom = indicatorRight.bottom
                             indicatorRightTimeRight.anchors.right = trimming.right
