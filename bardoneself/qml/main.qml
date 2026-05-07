@@ -174,6 +174,8 @@ Window {
         Rectangle {
             id: mixer
 
+            property real maximumTime: 35999999999
+
             width: audio.width * (98 / 223)
             height: audio.width * (49 / 223)
 
@@ -592,7 +594,7 @@ Window {
                         font.family: "Courier New"
                         font.bold: true
 
-                        text: "0:00:00:000:000000"
+                        text: formatMicroseconds((trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))) * mixer.maximumTime)
 
                         onWidthChanged: {
                             adjustFontSize()
@@ -627,6 +629,34 @@ Window {
                             }
 
                             font.pixelSize = best
+                        }
+
+                        function formatMicroseconds(micros) {
+                            var totalMicros = Math.floor(micros);
+
+                            var totalSecs = Math.floor(totalMicros / 1000000);
+                            var hours   = Math.floor(totalSecs / 3600);
+                            var minutes = Math.floor((totalSecs % 3600) / 60);
+                            var seconds = totalSecs % 60;
+
+                            var remainingMicros = totalMicros % 1000000;
+                            var millis = Math.floor(remainingMicros / 1000);
+                            var microsPart = remainingMicros % 1000;
+
+                            function pad2(n) {
+                                return n < 10 ? "0" + n : "" + n;
+                            }
+                            function pad3(n) {
+                                if (n < 10) {
+                                    return "00" + n;
+                                }
+                                if (n < 100) {
+                                    return "0" + n;
+                                }
+                                return "" + n;
+                            }
+
+                            return hours + ":" + pad2(minutes) + ":" + pad2(seconds) + ":" + pad3(millis) + ":" + pad3(microsPart);
                         }
 
                         Component.onCompleted: {
@@ -656,7 +686,7 @@ Window {
                         font.family: "Courier New"
                         font.bold: true
 
-                        text: "0:00:00:000:000000"
+                        text: formatMicroseconds((1 - (trimmingLineRight.width / (trimmingLineBackground.width - audio.width * (1 / 223)))) * mixer.maximumTime)
 
                         onWidthChanged: {
                             adjustFontSize()
@@ -691,6 +721,34 @@ Window {
                             }
 
                             font.pixelSize = best
+                        }
+
+                        function formatMicroseconds(micros) {
+                            var totalMicros = Math.floor(micros);
+
+                            var totalSecs = Math.floor(totalMicros / 1000000);
+                            var hours   = Math.floor(totalSecs / 3600);
+                            var minutes = Math.floor((totalSecs % 3600) / 60);
+                            var seconds = totalSecs % 60;
+
+                            var remainingMicros = totalMicros % 1000000;
+                            var millis = Math.floor(remainingMicros / 1000);
+                            var microsPart = remainingMicros % 1000;
+
+                            function pad2(n) {
+                                return n < 10 ? "0" + n : "" + n;
+                            }
+                            function pad3(n) {
+                                if (n < 10) {
+                                    return "00" + n;
+                                }
+                                if (n < 100) {
+                                    return "0" + n;
+                                }
+                                return "" + n;
+                            }
+
+                            return hours + ":" + pad2(minutes) + ":" + pad2(seconds) + ":" + pad3(millis) + ":" + pad3(microsPart);
                         }
 
                         Component.onCompleted: {
