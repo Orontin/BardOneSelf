@@ -4,8 +4,6 @@ import QtQuick.Effects
 import QtQuick.Controls
 import Qt.labs.platform
 
-// 49 и 143
-
 Window {
     id: root
 
@@ -691,6 +689,7 @@ Window {
                         }
 
                         Component.onCompleted: {
+                            indicatorLeftTimeLeftText.text = indicatorLeftTimeLeftText.formatMicroseconds((trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))) * mixer.maximumTime)
                             adjustFontSize()
                         }
                     }
@@ -796,6 +795,8 @@ Window {
                         }
 
                         Component.onCompleted: {
+                            indicatorRightTimeRightText.text = indicatorRightTimeRightText.formatMicroseconds((1 - (trimmingLineRight.width / (trimmingLineBackground.width - audio.width * (1 / 223)))) * mixer.maximumTime)
+
                             adjustFontSize()
                         }
                     }
