@@ -230,30 +230,30 @@ Window {
                         color: "grey"
 
                         onXChanged: {
-                            indicatorLeftTimeLeftText.updateIndicatorX()
-                            indicatorRightTimeRightText.updateIndicatorX()
+                            trimmingIndicatorLeftTimeLeftText.updateIndicatorX()
+                            trimmingIndicatorRightTimeRightText.updateIndicatorX()
                         }
 
                         onYChanged: {
-                            indicatorLeftTimeLeftText.updateIndicatorX()
-                            indicatorRightTimeRightText.updateIndicatorX()
+                            trimmingIndicatorLeftTimeLeftText.updateIndicatorX()
+                            trimmingIndicatorRightTimeRightText.updateIndicatorX()
                         }
 
                         onWidthChanged: {
-                            indicatorLeftTimeLeftText.updateIndicatorX()
-                            indicatorRightTimeRightText.updateIndicatorX()
+                            trimmingIndicatorLeftTimeLeftText.updateIndicatorX()
+                            trimmingIndicatorRightTimeRightText.updateIndicatorX()
                         }
 
                         onHeightChanged: {
-                            indicatorLeftTimeLeftText.updateIndicatorX()
-                            indicatorRightTimeRightText.updateIndicatorX()
+                            trimmingIndicatorLeftTimeLeftText.updateIndicatorX()
+                            trimmingIndicatorRightTimeRightText.updateIndicatorX()
                         }
                     }
 
                     Rectangle {
                         id: trimmingLineLeft
 
-                        width: indicatorLeft.x
+                        width: trimmingIndicatorLeft.x
                         height: audio.width * (3 / 223)
 
                         anchors.top: trimmingLine.top
@@ -268,7 +268,7 @@ Window {
                     Rectangle {
                         id: trimmingLineRight
 
-                        width: trimmingLineBackground.width - (audio.width * (1 / 223)) - indicatorRight.x
+                        width: trimmingLineBackground.width - (audio.width * (1 / 223)) - trimmingIndicatorRight.x
                         height: audio.width * (3 / 223)
 
                         anchors.top: trimmingLine.top
@@ -338,7 +338,7 @@ Window {
                 }
 
                 Rectangle {
-                    id: indicatorLeft
+                    id: trimmingIndicatorLeft
 
                     anchors.top: trimming.top
 
@@ -350,35 +350,35 @@ Window {
                     focus: false
 
                     Keys.onLeftPressed: {
-                        if (indicatorLeftTimeLeftText.parseMicroseconds(indicatorLeftTimeLeftText.text) > 0) {
-                            indicatorLeftTimeLeftText.text = indicatorLeftTimeLeftText.formatMicroseconds(indicatorLeftTimeLeftText.parseMicroseconds(indicatorLeftTimeLeftText.text) - 1)
+                        if (trimmingIndicatorLeftTimeLeftText.parseMicroseconds(trimmingIndicatorLeftTimeLeftText.text) > 0) {
+                            trimmingIndicatorLeftTimeLeftText.text = trimmingIndicatorLeftTimeLeftText.formatMicroseconds(trimmingIndicatorLeftTimeLeftText.parseMicroseconds(trimmingIndicatorLeftTimeLeftText.text) - 1)
                         }
                     }
                     Keys.onRightPressed: {
-                        if (indicatorLeftTimeLeftText.parseMicroseconds(indicatorLeftTimeLeftText.text) < mixer.maximumTime) {
-                            indicatorLeftTimeLeftText.text = indicatorLeftTimeLeftText.formatMicroseconds(indicatorLeftTimeLeftText.parseMicroseconds(indicatorLeftTimeLeftText.text) + 1)
+                        if (trimmingIndicatorLeftTimeLeftText.parseMicroseconds(trimmingIndicatorLeftTimeLeftText.text) < mixer.maximumTime) {
+                            trimmingIndicatorLeftTimeLeftText.text = trimmingIndicatorLeftTimeLeftText.formatMicroseconds(trimmingIndicatorLeftTimeLeftText.parseMicroseconds(trimmingIndicatorLeftTimeLeftText.text) + 1)
                         }
                     }
 
                     Rectangle {
-                        id: indicatorLeftHead
+                        id: trimmingIndicatorLeftHead
 
                         width: audio.width * (9 / 223)
                         height: audio.width * (5 / 223)
 
-                        anchors.top: indicatorLeft.top
-                        anchors.left: indicatorLeft.left
+                        anchors.top: trimmingIndicatorLeft.top
+                        anchors.left: trimmingIndicatorLeft.left
 
                         color: "black"
 
                         Rectangle {
-                            id: indicatorLeftHeadIn
+                            id: trimmingIndicatorLeftHeadIn
 
                             width: audio.width * (7 / 223)
                             height: audio.width * (3 / 223)
 
-                            anchors.top: indicatorLeftHead.top
-                            anchors.left: indicatorLeftHead.left
+                            anchors.top: trimmingIndicatorLeftHead.top
+                            anchors.left: trimmingIndicatorLeftHead.left
 
                             anchors.topMargin: audio.width * (1 / 223)
                             anchors.leftMargin: audio.width * (1 / 223)
@@ -388,13 +388,13 @@ Window {
                     }
 
                     Rectangle {
-                        id: indicatorLeftLeg
+                        id: trimmingIndicatorLeftLeg
 
                         width: audio.width * (3 / 223)
                         height: audio.width * (7 / 223)
 
-                        anchors.top: indicatorLeft.top
-                        anchors.left: indicatorLeft.left
+                        anchors.top: trimmingIndicatorLeft.top
+                        anchors.left: trimmingIndicatorLeft.left
 
                         anchors.topMargin: audio.width * (4 / 223)
                         anchors.leftMargin: audio.width * (3 / 223)
@@ -402,13 +402,13 @@ Window {
                         color: "black"
 
                         Rectangle {
-                            id: indicatorLeftLegIn
+                            id: trimmingIndicatorLeftLegIn
 
                             width: audio.width * (1 / 223)
                             height: audio.width * (6 / 223)
 
-                            anchors.top: indicatorLeftLeg.top
-                            anchors.left: indicatorLeftLeg.left
+                            anchors.top: trimmingIndicatorLeftLeg.top
+                            anchors.left: trimmingIndicatorLeftLeg.left
 
                             anchors.leftMargin: audio.width * (1 / 223)
 
@@ -417,16 +417,16 @@ Window {
                     }
 
                     MouseArea {
-                        id: indicatorLeftMouseArea
-                        anchors.fill: indicatorLeft
-                        drag.target: indicatorLeft
+                        id: trimmingIndicatorLeftMouseArea
+                        anchors.fill: trimmingIndicatorLeft
+                        drag.target: trimmingIndicatorLeft
                         drag.axis: Drag.XAxis
                         cursorShape: Qt.SizeHorCursor
                         drag.minimumX: 0
                         drag.maximumX: (trimmingLineBackground.width - audio.width * (1 / 223)) - trimmingLineRight.width
 
                         onPositionChanged: function(mouse) {
-                            indicatorLeftTimeLeftText.text = indicatorLeftTimeLeftText.formatMicroseconds((trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))) * mixer.maximumTime)
+                            trimmingIndicatorLeftTimeLeftText.text = trimmingIndicatorLeftTimeLeftText.formatMicroseconds((trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))) * mixer.maximumTime)
                         }
                     }
 
@@ -451,28 +451,28 @@ Window {
                     }
 
                     function adjustSize() {
-                        if ((indicatorLeftTimeLeftText.parseMicroseconds(indicatorLeftTimeLeftText.text)) / mixer.maximumTime <= 0.5) {
-                            indicatorLeftTimeLeft.anchors.top = indicatorLeft.top
-                            indicatorLeftTimeLeft.anchors.bottom = indicatorLeft.bottom
-                            indicatorLeftTimeLeft.anchors.right = trimming.right
-                            indicatorLeftTimeLeft.anchors.left = indicatorLeft.right
-                            indicatorLeftTimeLeft.anchors.rightMargin = 0
-                            indicatorLeftTimeLeft.anchors.leftMargin = audio.width * (1 / 223)
-                            indicatorLeftTimeLeftText.horizontalAlignment = Text.AlignLeft
+                        if ((trimmingIndicatorLeftTimeLeftText.parseMicroseconds(trimmingIndicatorLeftTimeLeftText.text)) / mixer.maximumTime <= 0.5) {
+                            trimmingIndicatorLeftTimeLeft.anchors.top = trimmingIndicatorLeft.top
+                            trimmingIndicatorLeftTimeLeft.anchors.bottom = trimmingIndicatorLeft.bottom
+                            trimmingIndicatorLeftTimeLeft.anchors.right = trimming.right
+                            trimmingIndicatorLeftTimeLeft.anchors.left = trimmingIndicatorLeft.right
+                            trimmingIndicatorLeftTimeLeft.anchors.rightMargin = 0
+                            trimmingIndicatorLeftTimeLeft.anchors.leftMargin = audio.width * (1 / 223)
+                            trimmingIndicatorLeftTimeLeftText.horizontalAlignment = Text.AlignLeft
                         } else {
-                            indicatorLeftTimeLeft.anchors.top = indicatorLeft.top
-                            indicatorLeftTimeLeft.anchors.bottom = indicatorLeft.bottom
-                            indicatorLeftTimeLeft.anchors.right = indicatorLeft.left
-                            indicatorLeftTimeLeft.anchors.left = trimming.left
-                            indicatorLeftTimeLeft.anchors.rightMargin = audio.width * (1 / 223)
-                            indicatorLeftTimeLeft.anchors.leftMargin = 0
-                            indicatorLeftTimeLeftText.horizontalAlignment = Text.AlignRight
+                            trimmingIndicatorLeftTimeLeft.anchors.top = trimmingIndicatorLeft.top
+                            trimmingIndicatorLeftTimeLeft.anchors.bottom = trimmingIndicatorLeft.bottom
+                            trimmingIndicatorLeftTimeLeft.anchors.right = trimmingIndicatorLeft.left
+                            trimmingIndicatorLeftTimeLeft.anchors.left = trimming.left
+                            trimmingIndicatorLeftTimeLeft.anchors.rightMargin = audio.width * (1 / 223)
+                            trimmingIndicatorLeftTimeLeft.anchors.leftMargin = 0
+                            trimmingIndicatorLeftTimeLeftText.horizontalAlignment = Text.AlignRight
                         }
                     }
                 }
 
                 Rectangle {
-                    id: indicatorRight
+                    id: trimmingIndicatorRight
 
                     anchors.bottom: trimming.bottom
 
@@ -484,35 +484,35 @@ Window {
                     focus: true
 
                     Keys.onLeftPressed: {
-                        if (indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) > 0) {
-                            indicatorRightTimeRightText.text = indicatorRightTimeRightText.formatMicroseconds(indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) - 1)
+                        if (trimmingIndicatorRightTimeRightText.parseMicroseconds(trimmingIndicatorRightTimeRightText.text) > 0) {
+                            trimmingIndicatorRightTimeRightText.text = trimmingIndicatorRightTimeRightText.formatMicroseconds(trimmingIndicatorRightTimeRightText.parseMicroseconds(trimmingIndicatorRightTimeRightText.text) - 1)
                         }
                     }
                     Keys.onRightPressed: {
-                        if (indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) < mixer.maximumTime) {
-                            indicatorRightTimeRightText.text = indicatorRightTimeRightText.formatMicroseconds(indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) + 1)
+                        if (trimmingIndicatorRightTimeRightText.parseMicroseconds(trimmingIndicatorRightTimeRightText.text) < mixer.maximumTime) {
+                            trimmingIndicatorRightTimeRightText.text = trimmingIndicatorRightTimeRightText.formatMicroseconds(trimmingIndicatorRightTimeRightText.parseMicroseconds(trimmingIndicatorRightTimeRightText.text) + 1)
                         }
                     }
 
                     Rectangle {
-                        id: indicatorRightHead
+                        id: trimmingIndicatorRightHead
 
                         width: audio.width * (9 / 223)
                         height: audio.width * (5 / 223)
 
-                        anchors.bottom: indicatorRight.bottom
-                        anchors.left: indicatorRight.left
+                        anchors.bottom: trimmingIndicatorRight.bottom
+                        anchors.left: trimmingIndicatorRight.left
 
                         color: "black"
 
                         Rectangle {
-                            id: indicatorRightHeadIn
+                            id: trimmingIndicatorRightHeadIn
 
                             width: audio.width * (7 / 223)
                             height: audio.width * (3 / 223)
 
-                            anchors.bottom: indicatorRightHead.bottom
-                            anchors.left: indicatorRightHead.left
+                            anchors.bottom: trimmingIndicatorRightHead.bottom
+                            anchors.left: trimmingIndicatorRightHead.left
 
                             anchors.bottomMargin: audio.width * (1 / 223)
                             anchors.leftMargin: audio.width * (1 / 223)
@@ -522,13 +522,13 @@ Window {
                     }
 
                     Rectangle {
-                        id: indicatorRightLeg
+                        id: trimmingIndicatorRightLeg
 
                         width: audio.width * (3 / 223)
                         height: audio.width * (7 / 223)
 
-                        anchors.bottom: indicatorRight.bottom
-                        anchors.left: indicatorRight.left
+                        anchors.bottom: trimmingIndicatorRight.bottom
+                        anchors.left: trimmingIndicatorRight.left
 
                         anchors.bottomMargin: audio.width * (4 / 223)
                         anchors.leftMargin: audio.width * (3 / 223)
@@ -536,13 +536,13 @@ Window {
                         color: "black"
 
                         Rectangle {
-                            id: indicatorRightLegIn
+                            id: trimmingIndicatorRightLegIn
 
                             width: audio.width * (1 / 223)
                             height: audio.width * (6 / 223)
 
-                            anchors.bottom: indicatorRightLeg.bottom
-                            anchors.left: indicatorRightLeg.left
+                            anchors.bottom: trimmingIndicatorRightLeg.bottom
+                            anchors.left: trimmingIndicatorRightLeg.left
 
                             anchors.leftMargin: audio.width * (1 / 223)
 
@@ -551,16 +551,16 @@ Window {
                     }
 
                     MouseArea {
-                        id: indicatorRightMouseArea
-                        anchors.fill: indicatorRight
-                        drag.target: indicatorRight
+                        id: trimmingIndicatorRightMouseArea
+                        anchors.fill: trimmingIndicatorRight
+                        drag.target: trimmingIndicatorRight
                         drag.axis: Drag.XAxis
                         cursorShape: Qt.SizeHorCursor
                         drag.minimumX: trimmingLineLeft.width
                         drag.maximumX: trimmingLineBackground.width - audio.width * (1 / 223)
 
                         onPositionChanged: function(mouse) {
-                            indicatorRightTimeRightText.text = indicatorRightTimeRightText.formatMicroseconds((1 - (trimmingLineRight.width / (trimmingLineBackground.width - audio.width * (1 / 223)))) * mixer.maximumTime)
+                            trimmingIndicatorRightTimeRightText.text = trimmingIndicatorRightTimeRightText.formatMicroseconds((1 - (trimmingLineRight.width / (trimmingLineBackground.width - audio.width * (1 / 223)))) * mixer.maximumTime)
                         }
                     }
 
@@ -585,37 +585,37 @@ Window {
                     }
 
                     function adjustSize() {
-                        if ((indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text)) / mixer.maximumTime <= 0.5) {
-                            indicatorRightTimeRight.anchors.top = indicatorRight.top
-                            indicatorRightTimeRight.anchors.bottom = indicatorRight.bottom
-                            indicatorRightTimeRight.anchors.right = trimming.right
-                            indicatorRightTimeRight.anchors.left = indicatorRight.right
-                            indicatorRightTimeRight.anchors.rightMargin = 0
-                            indicatorRightTimeRight.anchors.leftMargin = audio.width * (1 / 223)
-                            indicatorRightTimeRightText.horizontalAlignment = Text.AlignLeft
+                        if ((trimmingIndicatorRightTimeRightText.parseMicroseconds(trimmingIndicatorRightTimeRightText.text)) / mixer.maximumTime <= 0.5) {
+                            trimmingIndicatorRightTimeRight.anchors.top = trimmingIndicatorRight.top
+                            trimmingIndicatorRightTimeRight.anchors.bottom = trimmingIndicatorRight.bottom
+                            trimmingIndicatorRightTimeRight.anchors.right = trimming.right
+                            trimmingIndicatorRightTimeRight.anchors.left = trimmingIndicatorRight.right
+                            trimmingIndicatorRightTimeRight.anchors.rightMargin = 0
+                            trimmingIndicatorRightTimeRight.anchors.leftMargin = audio.width * (1 / 223)
+                            trimmingIndicatorRightTimeRightText.horizontalAlignment = Text.AlignLeft
                         } else {
-                            indicatorRightTimeRight.anchors.top = indicatorRight.top
-                            indicatorRightTimeRight.anchors.bottom = indicatorRight.bottom
-                            indicatorRightTimeRight.anchors.right = indicatorRight.left
-                            indicatorRightTimeRight.anchors.left = trimming.left
-                            indicatorRightTimeRight.anchors.rightMargin = audio.width * (1 / 223)
-                            indicatorRightTimeRight.anchors.leftMargin = 0
-                            indicatorRightTimeRightText.horizontalAlignment = Text.AlignRight
+                            trimmingIndicatorRightTimeRight.anchors.top = trimmingIndicatorRight.top
+                            trimmingIndicatorRightTimeRight.anchors.bottom = trimmingIndicatorRight.bottom
+                            trimmingIndicatorRightTimeRight.anchors.right = trimmingIndicatorRight.left
+                            trimmingIndicatorRightTimeRight.anchors.left = trimming.left
+                            trimmingIndicatorRightTimeRight.anchors.rightMargin = audio.width * (1 / 223)
+                            trimmingIndicatorRightTimeRight.anchors.leftMargin = 0
+                            trimmingIndicatorRightTimeRightText.horizontalAlignment = Text.AlignRight
                         }
                     }
                 }
 
                 Rectangle {
-                    id: indicatorLeftTimeLeft
+                    id: trimmingIndicatorLeftTimeLeft
 
                     anchors.bottomMargin: audio.width * (7 / 223)
 
                     color: "transparent"
 
                     Text {
-                        id: indicatorLeftTimeLeftText
+                        id: trimmingIndicatorLeftTimeLeftText
 
-                        anchors.fill: indicatorLeftTimeLeft
+                        anchors.fill: trimmingIndicatorLeftTimeLeft
 
                         verticalAlignment: Text.AlignVCenter
 
@@ -709,7 +709,7 @@ Window {
                         }
 
                         function updateIndicatorX() {
-                            indicatorLeft.x = ((indicatorLeftTimeLeftText.parseMicroseconds(indicatorLeftTimeLeftText.text)) / mixer.maximumTime) * (trimmingLineBackground.width - audio.width * (1 / 223))
+                            trimmingIndicatorLeft.x = ((trimmingIndicatorLeftTimeLeftText.parseMicroseconds(trimmingIndicatorLeftTimeLeftText.text)) / mixer.maximumTime) * (trimmingLineBackground.width - audio.width * (1 / 223))
                         }
 
                         Component.onCompleted: {
@@ -720,16 +720,16 @@ Window {
                 }
 
                 Rectangle {
-                    id: indicatorRightTimeRight
+                    id: trimmingIndicatorRightTimeRight
 
                     anchors.topMargin: audio.width * (7 / 223)
 
                     color: "transparent"
 
                     Text {
-                        id: indicatorRightTimeRightText
+                        id: trimmingIndicatorRightTimeRightText
 
-                        anchors.fill: indicatorRightTimeRight
+                        anchors.fill: trimmingIndicatorRightTimeRight
 
                         verticalAlignment: Text.AlignVCenter
 
@@ -823,7 +823,7 @@ Window {
                         }
 
                         function updateIndicatorX() {
-                            indicatorRight.x = ((indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text)) / mixer.maximumTime) * (trimmingLineBackground.width - audio.width * (1 / 223))
+                            trimmingIndicatorRight.x = ((trimmingIndicatorRightTimeRightText.parseMicroseconds(trimmingIndicatorRightTimeRightText.text)) / mixer.maximumTime) * (trimmingLineBackground.width - audio.width * (1 / 223))
                         }
 
                         Component.onCompleted: {
