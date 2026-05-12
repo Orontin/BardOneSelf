@@ -228,6 +228,26 @@ Window {
                         anchors.leftMargin: audio.width * (1 / 223)
 
                         color: "grey"
+
+                        onXChanged: {
+                            indicatorLeftTimeLeftText.updateIndicatorX()
+                            indicatorRightTimeRightText.updateIndicatorX()
+                        }
+
+                        onYChanged: {
+                            indicatorLeftTimeLeftText.updateIndicatorX()
+                            indicatorRightTimeRightText.updateIndicatorX()
+                        }
+
+                        onWidthChanged: {
+                            indicatorLeftTimeLeftText.updateIndicatorX()
+                            indicatorRightTimeRightText.updateIndicatorX()
+                        }
+
+                        onHeightChanged: {
+                            indicatorLeftTimeLeftText.updateIndicatorX()
+                            indicatorRightTimeRightText.updateIndicatorX()
+                        }
                     }
 
                     Rectangle {
@@ -319,8 +339,6 @@ Window {
 
                 Rectangle {
                     id: indicatorLeft
-
-                    x: ((indicatorLeftTimeLeftText.parseMicroseconds(indicatorLeftTimeLeftText.text) - 1) / mixer.maximumTime) * (trimmingLineBackground.width - audio.width * (1 / 223))
 
                     anchors.top: trimming.top
 
@@ -433,7 +451,7 @@ Window {
                     }
 
                     function adjustSize() {
-                        if ((indicatorLeftTimeLeftText.parseMicroseconds(indicatorLeftTimeLeftText.text) - 1) / mixer.maximumTime <= 0.5) {
+                        if ((indicatorLeftTimeLeftText.parseMicroseconds(indicatorLeftTimeLeftText.text)) / mixer.maximumTime <= 0.5) {
                             indicatorLeftTimeLeft.anchors.top = indicatorLeft.top
                             indicatorLeftTimeLeft.anchors.bottom = indicatorLeft.bottom
                             indicatorLeftTimeLeft.anchors.right = trimming.right
@@ -456,8 +474,6 @@ Window {
                 Rectangle {
                     id: indicatorRight
 
-                    x: ((indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) - 1) / mixer.maximumTime) * (trimmingLineBackground.width - audio.width * (1 / 223))
-
                     anchors.bottom: trimming.bottom
 
                     width: audio.width * (9 / 223)
@@ -468,13 +484,13 @@ Window {
                     focus: true
 
                     Keys.onLeftPressed: {
-                        if (indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) < mixer.maximumTime) {
-                            indicatorRightTimeRightText.text = indicatorRightTimeRightText.formatMicroseconds(indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) + 1)
+                        if (indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) > 0) {
+                            indicatorRightTimeRightText.text = indicatorRightTimeRightText.formatMicroseconds(indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) - 1)
                         }
                     }
                     Keys.onRightPressed: {
-                        if (indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) > 0) {
-                            indicatorRightTimeRightText.text = indicatorRightTimeRightText.formatMicroseconds(indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) - 1)
+                        if (indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) < mixer.maximumTime) {
+                            indicatorRightTimeRightText.text = indicatorRightTimeRightText.formatMicroseconds(indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) + 1)
                         }
                     }
 
@@ -569,7 +585,7 @@ Window {
                     }
 
                     function adjustSize() {
-                        if ((indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text) - 1) / mixer.maximumTime <= 0.5) {
+                        if ((indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text)) / mixer.maximumTime <= 0.5) {
                             indicatorRightTimeRight.anchors.top = indicatorRight.top
                             indicatorRightTimeRight.anchors.bottom = indicatorRight.bottom
                             indicatorRightTimeRight.anchors.right = trimming.right
@@ -612,6 +628,10 @@ Window {
 
                         text: formatMicroseconds(0)
 
+                        onTextChanged: {
+                            updateIndicatorX()
+                        }
+
                         onWidthChanged: {
                             adjustFontSize()
                         }
@@ -688,8 +708,12 @@ Window {
                             return totalMicros;
                         }
 
+                        function updateIndicatorX() {
+                            indicatorLeft.x = ((indicatorLeftTimeLeftText.parseMicroseconds(indicatorLeftTimeLeftText.text)) / mixer.maximumTime) * (trimmingLineBackground.width - audio.width * (1 / 223))
+                        }
+
                         Component.onCompleted: {
-                            indicatorLeftTimeLeftText.text = indicatorLeftTimeLeftText.formatMicroseconds((trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))) * mixer.maximumTime)
+                            updateIndicatorX()
                             adjustFontSize()
                         }
                     }
@@ -718,6 +742,10 @@ Window {
 
                         text: formatMicroseconds(mixer.maximumTime)
 
+                        onTextChanged: {
+                            updateIndicatorX()
+                        }
+
                         onWidthChanged: {
                             adjustFontSize()
                         }
@@ -794,9 +822,12 @@ Window {
                             return totalMicros;
                         }
 
-                        Component.onCompleted: {
-                            indicatorRightTimeRightText.text = indicatorRightTimeRightText.formatMicroseconds((1 - (trimmingLineRight.width / (trimmingLineBackground.width - audio.width * (1 / 223)))) * mixer.maximumTime)
+                        function updateIndicatorX() {
+                            indicatorRight.x = ((indicatorRightTimeRightText.parseMicroseconds(indicatorRightTimeRightText.text)) / mixer.maximumTime) * (trimmingLineBackground.width - audio.width * (1 / 223))
+                        }
 
+                        Component.onCompleted: {
+                            updateIndicatorX()
                             adjustFontSize()
                         }
                     }
