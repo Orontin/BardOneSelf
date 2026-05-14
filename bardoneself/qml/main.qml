@@ -63,30 +63,30 @@ Window {
                 enabled: audio.status
 
                 onEnabledChanged: {
-                    if (enabled) {
-                        text = fullText
+                    if (nameText.enabled) {
+                        nameText.text = nameText.fullText
                     } else {
-                        if (fullText.length > 29) {
-                            text = fullText.substring(0, 29) + "..."
+                        if (nameText.fullText.length > 29) {
+                            nameText.text = nameText.fullText.substring(0, 29) + "..."
                         } else {
-                            text = fullText
+                            nameText.text = nameText.fullText
                         }
                     }
                 }
 
                 onTextChanged: {
-                    if (enabled) {
-                        fullText = text
+                    if (nameText.enabled) {
+                        nameText.fullText = nameText.text
                     }
-                    adjustFontSize()
+                    nameText.adjustFontSize()
                 }
 
                 onWidthChanged: {
-                    adjustFontSize()
+                    nameText.adjustFontSize()
                 }
 
                 onHeightChanged: {
-                    adjustFontSize()
+                    nameText.adjustFontSize()
                 }
 
                 function adjustFontSize() {
@@ -117,7 +117,7 @@ Window {
                 }
 
                 Component.onCompleted: {
-                    adjustFontSize()
+                    nameText.adjustFontSize()
                 }
             }
         }
@@ -426,28 +426,37 @@ Window {
                         drag.maximumX: (trimmingLineBackground.width - audio.width * (1 / 223)) - trimmingLineRight.width
 
                         onPositionChanged: function(mouse) {
+                            console.log("0", (trimmingLineBackground.width - audio.width * (1 / 223)))
+                            console.log("L0", trimmingIndicatorLeftTimeLeftText.text)
+                            console.log("R0", trimmingIndicatorRightTimeRightText.text)
+                            console.log("L1", (trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))))
+                            console.log("R1", (1 - (trimmingLineRight.width / (trimmingLineBackground.width - audio.width * (1 / 223)))))
+                            console.log("L2", trimmingLineLeft.width)
+                            console.log("R2", trimmingLineRight.width)
+                            console.log("L3", trimmingIndicatorLeftTimeLeftText.formatMicroseconds((trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))) * mixer.maximumTime))
+                            console.log("R3", trimmingIndicatorRightTimeRightText.formatMicroseconds((1 - (trimmingLineRight.width / (trimmingLineBackground.width - audio.width * (1 / 223)))) * mixer.maximumTime))
                             trimmingIndicatorLeftTimeLeftText.text = trimmingIndicatorLeftTimeLeftText.formatMicroseconds((trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))) * mixer.maximumTime)
                         }
                     }
 
                     onXChanged: {
-                        adjustSize()
+                        trimmingIndicatorLeft.adjustSize()
                     }
 
                     onYChanged: {
-                        adjustSize()
+                        trimmingIndicatorLeft.adjustSize()
                     }
 
                     onWidthChanged: {
-                        adjustSize()
+                        trimmingIndicatorLeft.adjustSize()
                     }
 
                     onHeightChanged: {
-                        adjustSize()
+                        trimmingIndicatorLeft.adjustSize()
                     }
 
                     Component.onCompleted: {
-                        adjustSize()
+                        trimmingIndicatorLeft.adjustSize()
                     }
 
                     function adjustSize() {
@@ -565,23 +574,23 @@ Window {
                     }
 
                     onXChanged: {
-                        adjustSize()
+                        trimmingIndicatorRight.adjustSize()
                     }
 
                     onYChanged: {
-                        adjustSize()
+                        trimmingIndicatorRight.adjustSize()
                     }
 
                     onWidthChanged: {
-                        adjustSize()
+                        trimmingIndicatorRight.adjustSize()
                     }
 
                     onHeightChanged: {
-                        adjustSize()
+                        trimmingIndicatorRight.adjustSize()
                     }
 
                     Component.onCompleted: {
-                        adjustSize()
+                        trimmingIndicatorRight.adjustSize()
                     }
 
                     function adjustSize() {
@@ -626,18 +635,18 @@ Window {
                         font.family: "Courier New"
                         font.bold: true
 
-                        text: formatMicroseconds(0)
+                        text: trimmingIndicatorLeftTimeLeftText.formatMicroseconds(0)
 
                         onTextChanged: {
-                            updateIndicatorX()
+                            trimmingIndicatorLeftTimeLeftText.updateIndicatorX()
                         }
 
                         onWidthChanged: {
-                            adjustFontSize()
+                            trimmingIndicatorLeftTimeLeftText.adjustFontSize()
                         }
 
                         onHeightChanged: {
-                            adjustFontSize()
+                            trimmingIndicatorLeftTimeLeftText.adjustFontSize()
                         }
 
                         function adjustFontSize() {
@@ -713,8 +722,8 @@ Window {
                         }
 
                         Component.onCompleted: {
-                            updateIndicatorX()
-                            adjustFontSize()
+                            trimmingIndicatorLeftTimeLeftText.updateIndicatorX()
+                            trimmingIndicatorLeftTimeLeftText.adjustFontSize()
                         }
                     }
                 }
@@ -740,18 +749,18 @@ Window {
                         font.family: "Courier New"
                         font.bold: true
 
-                        text: formatMicroseconds(mixer.maximumTime)
+                        text: trimmingIndicatorRightTimeRightText.formatMicroseconds(mixer.maximumTime)
 
                         onTextChanged: {
-                            updateIndicatorX()
+                            trimmingIndicatorRightTimeRightText.updateIndicatorX()
                         }
 
                         onWidthChanged: {
-                            adjustFontSize()
+                            trimmingIndicatorRightTimeRightText.adjustFontSize()
                         }
 
                         onHeightChanged: {
-                            adjustFontSize()
+                            trimmingIndicatorRightTimeRightText.adjustFontSize()
                         }
 
                         function adjustFontSize() {
@@ -827,8 +836,8 @@ Window {
                         }
 
                         Component.onCompleted: {
-                            updateIndicatorX()
-                            adjustFontSize()
+                            trimmingIndicatorRightTimeRightText.updateIndicatorX()
+                            trimmingIndicatorRightTimeRightText.adjustFontSize()
                         }
                     }
                 }
