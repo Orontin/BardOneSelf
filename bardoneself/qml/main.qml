@@ -347,7 +347,7 @@ Window {
 
                     color: "transparent"
 
-                    focus: false
+                    focus: true
 
                     Keys.onLeftPressed: {
                         if (trimmingIndicatorLeftTimeLeftText.parseMicroseconds(trimmingIndicatorLeftTimeLeftText.text) > 0) {
@@ -355,7 +355,7 @@ Window {
                         }
                     }
                     Keys.onRightPressed: {
-                        if (trimmingIndicatorLeftTimeLeftText.parseMicroseconds(trimmingIndicatorLeftTimeLeftText.text) < mixer.maximumTime) {
+                        if (trimmingIndicatorLeftTimeLeftText.parseMicroseconds(trimmingIndicatorLeftTimeLeftText.text) < trimmingIndicatorRightTimeRightText.parseMicroseconds(trimmingIndicatorRightTimeRightText.text)) {
                             trimmingIndicatorLeftTimeLeftText.text = trimmingIndicatorLeftTimeLeftText.formatMicroseconds(trimmingIndicatorLeftTimeLeftText.parseMicroseconds(trimmingIndicatorLeftTimeLeftText.text) + 1)
                         }
                     }
@@ -423,19 +423,18 @@ Window {
                         drag.axis: Drag.XAxis
                         cursorShape: Qt.SizeHorCursor
                         drag.minimumX: 0
-                        drag.maximumX: (trimmingLineBackground.width - audio.width * (1 / 223)) - trimmingLineRight.width
+                        drag.maximumX: ((trimmingIndicatorRightTimeRightText.parseMicroseconds(trimmingIndicatorRightTimeRightText.text)) / mixer.maximumTime) * (trimmingLineBackground.width - audio.width * (1 / 223))
 
+                        onClicked: {
+                            trimmingIndicatorRight.focus = false
+                            trimmingIndicatorLeft.focus = true
+                        }
                         onPositionChanged: function(mouse) {
-                            console.log("0", (trimmingLineBackground.width - audio.width * (1 / 223)))
-                            console.log("L0", trimmingIndicatorLeftTimeLeftText.text)
-                            console.log("R0", trimmingIndicatorRightTimeRightText.text)
-                            console.log("L1", (trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))))
-                            console.log("R1", (1 - (trimmingLineRight.width / (trimmingLineBackground.width - audio.width * (1 / 223)))))
-                            console.log("L2", trimmingLineLeft.width)
-                            console.log("R2", trimmingLineRight.width)
-                            console.log("L3", trimmingIndicatorLeftTimeLeftText.formatMicroseconds((trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))) * mixer.maximumTime))
-                            console.log("R3", trimmingIndicatorRightTimeRightText.formatMicroseconds((1 - (trimmingLineRight.width / (trimmingLineBackground.width - audio.width * (1 / 223)))) * mixer.maximumTime))
-                            trimmingIndicatorLeftTimeLeftText.text = trimmingIndicatorLeftTimeLeftText.formatMicroseconds((trimmingLineLeft.width / (trimmingLineBackground.width - audio.width * (1 / 223))) * mixer.maximumTime)
+                            var denominator = trimmingLineBackground.width - audio.width * (1 / 223);
+                            var timeUs = (trimmingLineLeft.width / denominator) * mixer.maximumTime;
+                            var roundedUs = Math.round(timeUs);
+                            roundedUs = Math.max(0, Math.min(mixer.maximumTime, roundedUs));
+                            trimmingIndicatorLeftTimeLeftText.text = trimmingIndicatorLeftTimeLeftText.formatMicroseconds(roundedUs);
                         }
                     }
 
@@ -490,10 +489,10 @@ Window {
 
                     color: "transparent"
 
-                    focus: true
+                    focus: false
 
                     Keys.onLeftPressed: {
-                        if (trimmingIndicatorRightTimeRightText.parseMicroseconds(trimmingIndicatorRightTimeRightText.text) > 0) {
+                        if (trimmingIndicatorRightTimeRightText.parseMicroseconds(trimmingIndicatorRightTimeRightText.text) > trimmingIndicatorLeftTimeLeftText.parseMicroseconds(trimmingIndicatorLeftTimeLeftText.text)) {
                             trimmingIndicatorRightTimeRightText.text = trimmingIndicatorRightTimeRightText.formatMicroseconds(trimmingIndicatorRightTimeRightText.parseMicroseconds(trimmingIndicatorRightTimeRightText.text) - 1)
                         }
                     }
@@ -568,8 +567,18 @@ Window {
                         drag.minimumX: trimmingLineLeft.width
                         drag.maximumX: trimmingLineBackground.width - audio.width * (1 / 223)
 
+                        onClicked: {
+                            trimmingIndicatorLeft.focus = false
+                            trimmingIndicatorRight.focus = true
+                        }
+
                         onPositionChanged: function(mouse) {
-                            trimmingIndicatorRightTimeRightText.text = trimmingIndicatorRightTimeRightText.formatMicroseconds((1 - (trimmingLineRight.width / (trimmingLineBackground.width - audio.width * (1 / 223)))) * mixer.maximumTime)
+                            var denominator = trimmingLineBackground.width - audio.width * (1 / 223);
+                            var ratio = trimmingLineRight.width / denominator;
+                            var timeUs = (1 - ratio) * mixer.maximumTime;
+                            var roundedUs = Math.round(timeUs);
+                            roundedUs = Math.max(0, Math.min(mixer.maximumTime, roundedUs));
+                            trimmingIndicatorRightTimeRightText.text = trimmingIndicatorRightTimeRightText.formatMicroseconds(roundedUs);
                         }
                     }
 
